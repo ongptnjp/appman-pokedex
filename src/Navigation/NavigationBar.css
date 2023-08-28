@@ -1,0 +1,26 @@
+.nav-bar {
+  background-color: #e83e3b;
+  color: white;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.circle {
+  background-color: #e83e3b;
+  color: white;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 5rem;
+  position: absolute;
+  bottom: 10px;
+}

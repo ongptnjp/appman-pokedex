@@ -1,0 +1,75 @@
+.card {
+  display: flex;
+  background-color: #dfdfdf;
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  height: 250px; /* Set a fixed height for the card */
+  width: 455px;
+}
+
+.card-image {
+  width: 40%;
+  padding-right: 10px;
+}
+
+.card-image img {
+  max-width: 100%;
+  max-height: 100%; /* Limit the image height to fit within the card */
+}
+
+.card-details {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-name {
+  font-size: 1.65rem;
+  margin: 0;
+  font-weight: 100;
+}
+
+.bar-chart {
+  width: 100%;
+  background-color: #ddd;
+  height: 20px;
+  margin-top: 5px;
+}
+
+.bar {
+  background-color: #ff6118;
+  border-radius: 15px;
+  height: 100%;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.stat-title {
+  flex: 1;
+  margin-right: 10px;
+  font-size: 1.25rem;
+}
+
+.stat-bar {
+  flex: 3;
+  background-color: #b9b8b8;
+  height: 30px;
+  border-radius: 15px;
+}
+
+.rating {
+  display: flex;
+  align-items: center; /* Align icons vertically */
+}
+
+.rating-icon {
+  width: 46px; /* Adjust the width to match your image size */
+  height: auto; /* Adjust the height to match your image size */
+  margin-right: 5px;
+  flex-shrink: 0; /* Prevent icons from shrinking */
+}
