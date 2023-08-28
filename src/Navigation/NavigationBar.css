@@ -1,7 +1,7 @@
 .nav-bar {
   background-color: #e83e3b;
   color: white;
-  position: relative;
+  position: absolute;
   bottom: 0;
   width: 100%;
   display: flex;

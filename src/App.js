@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import "./App.css";
 
-import { CardList } from "./Cards";
-import { Navigation } from "./Navigation";
-// import { CardModal } from "./CardsModal";
-
-// import CardConstants from "./cards.json";
-
-import cards from "./cards.json";
+import CardList from "./Cards/CardList";
+import Navigation from "./Navigation/NavigationBar";
+import CardModal from "./CardsModal/CardModal";
 
 const COLORS = {
   Psychic: "#f8a5c2",
@@ -36,12 +32,8 @@ function App() {
   return (
     <div className="App">
       <h1 style={{ textAlign: "center" }}>My PokeDex</h1>
-      <CardList cardList={cards?.cards} />
-      {/* <CardModal
-        isOpen={modalOpen}
-        onClose={closeModal}
-        cardList={CardConstants?.cards}
-      /> */}
+      <CardList cardList={[]} />
+      <CardModal isOpen={modalOpen} onClose={closeModal} cardList={[]} />
       <Navigation />
     </div>
   );

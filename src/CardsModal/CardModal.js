@@ -1,9 +1,19 @@
-import React, { useRef } from "react";
-import "./Modal.css";
-import { Card } from "../Cards";
+import React, { useRef, useEffect, useState } from "react";
 
-const Modal = ({ isOpen, onClose, cardList }) => {
+import Card from "../Cards/Card";
+
+import "./CardModal.css";
+
+const CardModal = ({ isOpen, onClose, setCardList }) => {
   const modalRef = useRef(null);
+  const [availableCards, setAvailableCards] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:3030/api/cards?limit=30`)
+      .then((response) => response.json())
+      .then((data) => setAvailableCards(data?.cards))
+      .catch((error) => console.error(error));
+  }, []);
 
   const handleOutsideClick = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -13,15 +23,17 @@ const Modal = ({ isOpen, onClose, cardList }) => {
 
   if (!isOpen) return null;
 
+  console.log(" availableCards", availableCards);
+
   return (
     <div className="modal-overlay" onClick={handleOutsideClick}>
       <div className="modal" ref={modalRef}>
         <div className="search-box">
-          <input type="text" placeholder="Search" />
+          <input type="text" placeholder="Find Pokemon" />
           <img src="/search.png" alt="Search Icon" className="search-icon" />
         </div>
         <div className="card-list">
-          {cardList.map((cardData, index) => (
+          {availableCards?.map((cardData, index) => (
             <Card key={index} cardData={cardData} />
           ))}
         </div>
@@ -33,4 +45,4 @@ const Modal = ({ isOpen, onClose, cardList }) => {
   );
 };
 
-export default Modal;
+export default CardModal;

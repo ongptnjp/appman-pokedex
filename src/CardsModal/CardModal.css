@@ -1,7 +1,7 @@
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: -10px;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -15,6 +15,7 @@
   padding: 20px;
   border-radius: 5px;
   position: relative;
+  width: 55rem;
 }
 
 .search-box {
@@ -28,6 +29,7 @@
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-family: inherit;
 }
 
 .search-icon {
@@ -39,9 +41,9 @@
 
 .card-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
-  max-height: 300px;
+  height: 500px;
   overflow-y: auto;
 }
 

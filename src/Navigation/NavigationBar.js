@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { CardModal } from "../CardsModal"; // Import the modal component
+import CardModal from "../CardsModal/CardModal"; // Import the modal component
 
 import "./NavigationBar.css";
 
