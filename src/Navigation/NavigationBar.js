@@ -1,27 +1,14 @@
-import React, { useState } from "react";
-
-import CardModal from "../CardsModal/CardModal"; // Import the modal component
+import React from "react";
 
 import "./NavigationBar.css";
 
-const NavigationBar = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
+const NavigationBar = ({ onOpenModal }) => {
   return (
     <div className="nav-bar">
       {/* Navigation bar content */}
-      <div className="circle" onClick={openModal}>
+      <div className="circle" onClick={onOpenModal}>
         +
       </div>
-      <CardModal isOpen={modalOpen} onClose={closeModal} />
     </div>
   );
 };

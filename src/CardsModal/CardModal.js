@@ -4,19 +4,15 @@ import Card from "../Cards/Card";
 
 import "./CardModal.css";
 
-const CardModal = ({ isOpen, onClose, setCardList }) => {
+const CardModal = ({
+  isOpen,
+  onClose,
+  pokemonCards,
+  addCard,
+  words,
+  setWords
+}) => {
   const modalRef = useRef(null);
-  const [availableCards, setAvailableCards] = useState([]);
-  const [words, setWords] = useState("");
-
-  useEffect(() => {
-    fetch(
-      `http://localhost:3030/api/cards?limit=30&name=${words}&type=${words}`
-    )
-      .then((response) => response.json())
-      .then((data) => setAvailableCards(data?.cards))
-      .catch((error) => console.error(error));
-  }, [words]);
 
   const handleOutsideClick = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -25,8 +21,6 @@ const CardModal = ({ isOpen, onClose, setCardList }) => {
   };
 
   if (!isOpen) return null;
-
-  console.log(" availableCards", availableCards);
 
   return (
     <div className="modal-overlay" onClick={handleOutsideClick}>
@@ -41,18 +35,15 @@ const CardModal = ({ isOpen, onClose, setCardList }) => {
           <img src="/search.png" alt="Search Icon" className="search-icon" />
         </div>
         <div className="card-list">
-          {availableCards?.map((cardData, index) => (
+          {pokemonCards?.map((cardData, index) => (
             <Card
               key={index}
               cardData={cardData}
               showAddButton
-              onAdd={() => alert("add")}
+              onAdd={addCard}
             />
           ))}
         </div>
-        <span className="close-button" onClick={onClose}>
-          &#10005;
-        </span>
       </div>
     </div>
   );

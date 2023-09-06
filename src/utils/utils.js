@@ -20,8 +20,6 @@ export function calculateStrengthLevel(attacks) {
 // use weaknesses length multiply by 100, maximum is 100. e.g. if value is 1 set it to 100, otherwise 0.
 export function calculateWeaknessLevel(weaknesses) {
   // Calculate the weakness level based on weaknesses
-  console.log(weaknesses);
-  console.log(weaknesses?.length);
   const weaknessLevel = Math.min(weaknesses?.length * 100, 100);
 
   return weaknessLevel;
@@ -49,9 +47,9 @@ export function calculateTotalDamage(attacks = []) {
 // Happiness level calculation
 // ((HP / 10) + (Damage /10 ) + 10 - (Weakness)) / 5
 export function calculateHappinessLevel(HP, damage, weaknesses) {
-  console.log("hp", HP);
-  console.log("damage", damage);
-  console.log("weaknesses", weaknesses);
+  // console.log("hp", HP);
+  // console.log("damage", damage);
+  // console.log("weaknesses", weaknesses);
 
   const hpFactor = HP / 10; // 10
   const damageFactor = damage / 10; // 5

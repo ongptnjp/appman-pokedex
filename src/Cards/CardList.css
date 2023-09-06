@@ -1,9 +1,0 @@
-.card-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 1000px;
-  margin: 0 auto;
-  overflow-y: auto; /* Enable vertical scrolling */
-  max-height: 80vh; /* Set a maximum height for the card list */
-}

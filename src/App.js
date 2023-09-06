@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
-import CardList from "./Cards/CardList";
+import Pokedex from "./Pokedex/Pokedex";
 import Navigation from "./Navigation/NavigationBar";
 import CardModal from "./CardsModal/CardModal";
 
@@ -21,20 +21,74 @@ const COLORS = {
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [pokedex, setPokedex] = useState([]);
+  const [pokemonCards, setPokemonCards] = useState([]);
+
+  const [words, setWords] = useState("");
 
   const openModal = () => {
+
+    if (pokemonCards.length <= 0) {
+      fetch(
+        `http://localhost:3030/api/cards?limit=30&name=${words}&type=${words}`
+      )
+        .then((response) => response.json())
+        .then((data) => setPokemonCards(data?.cards))
+        .catch((error) => console.error(error));
+    }
     setModalOpen(true);
   };
 
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  useEffect(() => {
+    fetch(
+      `http://localhost:3030/api/cards?limit=30&name=${words}&type=${words}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const updatedPokemonCards = data?.cards?.filter(
+          (c) => !pokedex.find((pokedexCard) => pokedexCard.id === c.id)
+        );
+        setPokemonCards(updatedPokemonCards);
+      })
+      .catch((error) => console.error(error));
+  }, [words]);
+
+  const handleAddToPokedex = (card) => {
+    // Add the card to your Pokedex
+    setPokedex([...pokedex, card]);
+
+    // Remove the card from the list of available Pokemon cards
+    const updatedPokemonCards = pokemonCards.filter((c) => c.id !== card.id);
+    setPokemonCards(updatedPokemonCards);
+  };
+
+  const handleRemoveFromPokedex = (card) => {
+    // Remove the card from your Pokedex
+    const updatedPokedex = pokedex.filter((c) => c.id !== card.id);
+    setPokedex(updatedPokedex);
+
+    // Add the card back to the list of available Pokemon cards
+    setPokemonCards([...pokemonCards, card]);
+  };
+
   return (
     <div className="App">
       <h1 style={{ textAlign: "center" }}>My PokeDex</h1>
-      <CardList cardList={[]} />
-      <CardModal isOpen={modalOpen} onClose={closeModal} cardList={[]} />
-      <Navigation />
+      <Pokedex cards={pokedex} />
+      <CardModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        pokemonCards={pokemonCards}
+        onSetPokemonCards={setPokemonCards}
+        addCard={handleAddToPokedex}
+        words={words}
+        setWords={setWords}
+      />
+      <Navigation onOpenModal={openModal} />
     </div>
   );
 }
