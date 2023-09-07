@@ -26,15 +26,36 @@ function App() {
 
   const [words, setWords] = useState("");
 
-  const openModal = () => {
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20); // Set your desired page size
+  const [hasMore, setHasMore] = useState(true);
 
+  const fetchPokemonCards = () => {
+    if (!hasMore) return;
+
+    fetch(
+      `http://localhost:3030/api/cards?pageSize=${pageSize}&page=${page}&name=${words}&type=${words}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const updatedPokemonCards = data?.cards?.filter(
+          (c) => !pokedex.find((pokedexCard) => pokedexCard.id === c.id)
+        );
+        
+        if (page === 1 ) {
+          setPokemonCards([...updatedPokemonCards]);
+        } else {
+          setPokemonCards([...pokemonCards, ...updatedPokemonCards]);
+        }
+        setPage(page + 1);
+        setHasMore(data.hasMore);
+      })
+      .catch((error) => console.error(error));
+  }
+
+  const openModal = () => {
     if (pokemonCards.length <= 0) {
-      fetch(
-        `http://localhost:3030/api/cards?limit=30&name=${words}&type=${words}`
-      )
-        .then((response) => response.json())
-        .then((data) => setPokemonCards(data?.cards))
-        .catch((error) => console.error(error));
+      fetchPokemonCards();
     }
     setModalOpen(true);
   };
@@ -44,18 +65,17 @@ function App() {
   };
 
   useEffect(() => {
-    fetch(
-      `http://localhost:3030/api/cards?limit=30&name=${words}&type=${words}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const updatedPokemonCards = data?.cards?.filter(
-          (c) => !pokedex.find((pokedexCard) => pokedexCard.id === c.id)
-        );
-        setPokemonCards(updatedPokemonCards);
-      })
-      .catch((error) => console.error(error));
+    // Fetch Pokemon cards when words changes
+    fetchPokemonCards();
   }, [words]);
+
+  const handleOnChangeSearch = (event) => {
+    const newWords = event?.target?.value;
+    // Reset the page to 1 when the search query changes
+    setPage(1);
+    setWords(newWords);
+    setHasMore(true)
+  }
 
   const handleAddToPokedex = (card) => {
     // Add the card to your Pokedex
@@ -78,7 +98,7 @@ function App() {
   return (
     <div className="App">
       <h1 style={{ textAlign: "center" }}>My PokeDex</h1>
-      <Pokedex cards={pokedex} />
+      <Pokedex cards={pokedex} onRemove={handleRemoveFromPokedex} />
       <CardModal
         isOpen={modalOpen}
         onClose={closeModal}
@@ -86,7 +106,9 @@ function App() {
         onSetPokemonCards={setPokemonCards}
         addCard={handleAddToPokedex}
         words={words}
-        setWords={setWords}
+        onChangeWords={handleOnChangeSearch}
+        hasMore={hasMore}
+        handleLoadMore={fetchPokemonCards}
       />
       <Navigation onOpenModal={openModal} />
     </div>

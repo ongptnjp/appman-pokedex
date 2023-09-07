@@ -47,13 +47,9 @@ export function calculateTotalDamage(attacks = []) {
 // Happiness level calculation
 // ((HP / 10) + (Damage /10 ) + 10 - (Weakness)) / 5
 export function calculateHappinessLevel(HP, damage, weaknesses) {
-  // console.log("hp", HP);
-  // console.log("damage", damage);
-  // console.log("weaknesses", weaknesses);
-
-  const hpFactor = HP / 10; // 10
-  const damageFactor = damage / 10; // 5
-  const weaknessFactor = weaknesses?.length; // 100
+  const hpFactor = HP / 10; 
+  const damageFactor = damage / 10; 
+  const weaknessFactor = weaknesses?.length;
 
   const happinessRaw = (hpFactor + damageFactor + 10 - weaknessFactor) / 5;
 

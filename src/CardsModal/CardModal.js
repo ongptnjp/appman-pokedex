@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import Card from "../Cards/Card";
 
@@ -10,9 +10,38 @@ const CardModal = ({
   pokemonCards,
   addCard,
   words,
-  setWords
+  onChangeWords,
+  hasMore,
+  handleLoadMore,
 }) => {
-  const modalRef = useRef(null);
+  const modalRef = useRef();
+
+  const [isFetching, setIsFetching] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Detect if the user has scrolled to the bottom
+      const scrollTop = document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const totalHeight = document.documentElement.scrollHeight;
+
+      if (
+        totalHeight - scrollTop - windowHeight < 100 &&
+        hasMore &&
+        !isFetching
+      ) {
+        // Near the bottom of the page, fetch more data
+        setIsFetching(true);
+        handleLoadMore();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      setIsFetching(false)
+    };
+  }, [isFetching, hasMore, handleLoadMore]);
 
   const handleOutsideClick = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -30,7 +59,7 @@ const CardModal = ({
             type="text"
             placeholder="Find Pokemon"
             value={words}
-            onChange={(e) => setWords(e.target?.value)}
+            onChange={onChangeWords}
           />
           <img src="/search.png" alt="Search Icon" className="search-icon" />
         </div>

@@ -4,7 +4,7 @@
   border: 1px solid #ccc;
   margin: 10px;
   padding: 10px;
-  height: 250px; /* Set a fixed height for the card */
+  height: 250px; 
   width: 450px;
 }
 
@@ -16,7 +16,7 @@
 
 .card-image img {
   max-width: 100%;
-  max-height: 100%; /* Limit the image height to fit within the card */
+  max-height: 100%; 
 }
 
 .card-details {
@@ -66,12 +66,12 @@
 
 .rating {
   display: flex;
-  align-items: center; /* Align icons vertically */
+  align-items: center;
 }
 
 .rating-icon {
-  width: 46px; /* Adjust the width to match your image size */
-  height: auto; /* Adjust the height to match your image size */
+  width: 46px; 
+  height: auto; 
   margin-right: 5px;
   flex-shrink: 0; /* Prevent icons from shrinking */
 }
@@ -96,4 +96,6 @@
 .remove-button-container {
   display: flex;
   align-items: flex-start;
+  color: #ff6118;
+  font-size: 1.7rem;
 }
